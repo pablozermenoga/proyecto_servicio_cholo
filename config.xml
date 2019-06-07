@@ -91,4 +91,5 @@
         <variable name="API_KEY_FOR_IOS" value="AIzaSyCEj2gLkDITPSBCQdaJPdJqf4bjJmAbUPk" />
     </plugin>
     <plugin name="cordova-plugin-geolocation" spec="4.0.1" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="^8.0.1" />
 </widget>
