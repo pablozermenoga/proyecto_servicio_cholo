@@ -7,21 +7,21 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   styleUrls: ['./qr.page.scss'],
 })
 export class QrPage implements OnInit {
-  qrData= null;
-  createdCode= null;
-  scannedCode= null;
+  qrData = null;
+  createdCode = null;
+  scannedCode = null;
   constructor( private barcodeScanner: BarcodeScanner) { }
 
   ngOnInit() {}
 
-  createCode(){
+  createCode() {
       this.createdCode = this.qrData;
   }
 
-  scanCode(){
-      this.barcodeScanner.scan().then(barcodeData=> { 
+  scanCode() {
+      this.barcodeScanner.scan().then(barcodeData => {
         this.scannedCode = barcodeData.text;
-      })
+    });
   }
 
 }
