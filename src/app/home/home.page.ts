@@ -12,6 +12,17 @@ declare const google;
 export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
   map: GoogleMap;
+
+  instituciones: any;/*=[
+    {id:1,lat:21.486315,lng:-104.852716},
+    {id:2,lat:21.483655,lng:-104.859106},
+    {id:3,lat:21.483697,lng:-104.859083},
+    {id:4,lat:21.484562,lng:-104.850336},
+    {id:5,lat:21.485337,lng:-104.853760},
+  ];*/
+
+  markers: any=[];
+
   constructor(private googleMaps: GoogleMaps,
     private geolocation: Geolocation) {
       this.geolocation.getCurrentPosition().then((resp)=>{
@@ -43,8 +54,24 @@ export class HomePage {
       marker.addListener("click",function(){
         
       });
+
+      this.instituciones.forEach(element => {
+        let position ={lat:element.lat,lng:element.lng};
+        console.log(position);
+        this.addMarkers(position,mapa,element.id);
+      });
   
       this.map = mapa;
+    }
+
+    addMarkers(pos,map,id){
+     this.markers.push(new google.maps.Marker({
+        position: pos,
+        map: map,
+        title: "Hello",
+        id: id
+      })
+      );
     }
 
 }
