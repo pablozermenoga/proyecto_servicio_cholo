@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { GoogleMap,GoogleMaps,GoogleMapOptions,GoogleMapsEvent } from '@ionic-native/google-maps/ngx'
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 
 
 declare const google;
@@ -22,8 +23,8 @@ export class HomePage {
   ];*/
 
   markers: any=[];
-
-  constructor(private googleMaps: GoogleMaps,
+  scannedCode = null;
+  constructor(private googleMaps: GoogleMaps, private barcodeScanner: BarcodeScanner,
     private geolocation: Geolocation) {
       this.geolocation.getCurrentPosition().then((resp)=>{
         this.loadMap(resp.coords.latitude,resp.coords.longitude);
@@ -73,5 +74,12 @@ export class HomePage {
       })
       );
     }
+
+    scanCode() {
+      this.barcodeScanner.scan().then(barcodeData => {
+        this.scannedCode = barcodeData.text;
+    });
+  }
+
 
 }
