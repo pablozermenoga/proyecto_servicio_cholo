@@ -12,15 +12,19 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import {BarcodeScanner} from '@ionic-native/barcode-scanner/ngx';
+import { HTTP } from '@ionic-native/http/ngx'
+import { HttpClientModule } from '@angular/common/http'
 
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,  NgxQRCodeModule, FormsModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,  NgxQRCodeModule, FormsModule,
+  HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,
+    HTTP,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     BarcodeScanner,
   ],
