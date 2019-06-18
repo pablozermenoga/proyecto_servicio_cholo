@@ -59,12 +59,12 @@ export class HomePage {
         
       });
 
-        this.httpClient.get('http://localhost:80/getescuelas', {}).subscribe(data => {
+        this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas', {}).subscribe(data => {
           for(let i in data){
             let position ={lat:Number(data[i].lat),lng:Number(data[i].lng)};
         //console.log(position);
         this.addMarkers(position,mapa,data[i].id);
-            console.log(data[i].lat);
+            //console.log(data[i].lat);
           }
           
         });
@@ -86,6 +86,9 @@ export class HomePage {
         id: id
       })
       );
+      this.markers[this.markers.length-1].addListener('click',function(){
+        alert(id);
+      });
     }
 
     scanCode() {
