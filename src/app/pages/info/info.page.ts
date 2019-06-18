@@ -11,8 +11,8 @@ export class InfoPage implements OnInit {
   
   institucion: Observable<any>;
 
-  constructor(public httpCliente: HttpClient) { 
-    this.institucion = this.httpCliente.get("http://sigmovil.herokuapp.com/getescuela/1",{});
+  constructor(public httpClient: HttpClient) { 
+    this.institucion = this.httpClient.get("http://sigmovil.herokuapp.com/getescuela/1",{});
     this.institucion.subscribe(data =>{
       console.log('My data: ', data);
   }) 
