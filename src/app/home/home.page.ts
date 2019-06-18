@@ -4,7 +4,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { HTTP } from '@ionic-native/http/ngx'
 import { HttpClient } from '@angular/common/http'
-import { forEach } from '@angular/router/src/utils/collection';
+import { Storage } from "@ionic/storage"
+import { Router, Params, Routes } from '@angular/router';
 
 
 declare const google;
@@ -28,7 +29,8 @@ export class HomePage {
   markers: any=[];
   scannedCode = null;
   constructor(private googleMaps: GoogleMaps, private barcodeScanner: BarcodeScanner,
-    private geolocation: Geolocation,private http: HTTP, private httpClient:HttpClient) {
+    private geolocation: Geolocation,private http: HTTP, private httpClient:HttpClient,
+    private storage: Storage, private router:Router) {
       this.geolocation.getCurrentPosition().then((resp)=>{
         this.loadMap(resp.coords.latitude,resp.coords.longitude);
       }).catch((error)=>{
@@ -86,9 +88,14 @@ export class HomePage {
         id: id
       })
       );
-      this.markers[this.markers.length-1].addListener('click',function(){
-        alert(id);
+      this.markers[this.markers.length-1].addListener('click',(event)=>{
+        this.navigateto(id);
       });
+    }
+
+    navigateto(id){
+      this.storage.set("id",id);
+        this.router.navigate(['/info']);
     }
 
     scanCode() {
