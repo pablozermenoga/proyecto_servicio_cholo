@@ -7,7 +7,9 @@ const routes: Routes = [
   { path: 'qr', loadChildren: './pages/qr/qr.module#QrPageModule' },
   { path: 'info', loadChildren: './pages/info/info.module#InfoPageModule' },
   { path: 'cct', loadChildren: './cct/cct.module#CctPageModule' },
-  { path: 'acercade', loadChildren: './acercade/acercade.module#AcercadePageModule' }
+  { path: 'acercade', loadChildren: './acercade/acercade.module#AcercadePageModule' },
+
+
 
 
 ];

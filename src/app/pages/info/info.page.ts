@@ -25,6 +25,7 @@ export class InfoPage implements OnInit {
   constructor(public httpClient: HttpClient, private storage: Storage, private router: Router) { 
     this.storage.get('id').then((item)=>{
       this.httpClient.get("http://sigmovil.herokuapp.com/getescuela/"+item,{}).subscribe(data =>{
+        console.log(item);
         this.nombre = data['Nombre_Inst'];
         this.subsistema = data['Subsistema'];
         this.correo = data['Correo_Elect_Inst'];
