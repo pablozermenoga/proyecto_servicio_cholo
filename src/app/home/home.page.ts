@@ -28,6 +28,7 @@ export class HomePage {
 
   markers: any=[];
   query: String='';
+  
   scannedCode = null;
   constructor(private googleMaps: GoogleMaps, private barcodeScanner: BarcodeScanner,
     private geolocation: Geolocation,private http: HTTP, private httpClient:HttpClient,
@@ -65,7 +66,8 @@ export class HomePage {
         
       });
 
-        this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas', {}).subscribe(data => {
+        this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas', {
+        }).subscribe(data => {
           for(let i in data){
             let position ={lat:Number(data[i].lat),lng:Number(data[i].lng)};
         //console.log(position);
@@ -118,6 +120,8 @@ export class HomePage {
     scanCode() {
       this.barcodeScanner.scan().then(barcodeData => {
         this.scannedCode = barcodeData.text;
+        this.storage.set("id",barcodeData.text);
+        this.router.navigate(['/info']);
     });
   }
 
