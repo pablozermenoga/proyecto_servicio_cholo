@@ -18,7 +18,7 @@ declare const google;
 })
 export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
-  map: GoogleMap;
+  map: any;
 
   instituciones: any=[
     {id:1,lat:21.486315,lng:-104.852716},
@@ -29,7 +29,9 @@ export class HomePage {
   ];
 
   markers: any=[];
+  query: String='';
   scannedCode = null;
+
   constructor(private googleMaps: GoogleMaps,
      private barcodeScanner: BarcodeScanner,
     private geolocation: Geolocation,
@@ -44,12 +46,13 @@ export class HomePage {
       }).catch((error)=>{
   
       });  
+
     }
 
     loadMap(latitud, longitud){
       let pos = { lat: latitud, lng: longitud }
       var mapa = new google.maps.Map(this.mapElement.nativeElement,{
-        zoom: 14,
+        zoom: 16,
           center: pos,
           mapTypeId: 'roadmap'
       });
@@ -86,8 +89,21 @@ export class HomePage {
       });*/
   
       this.map = mapa;
+
+      
     }
 
+    ionViewDidEnter(){
+      this.storage.get('lugar').then(element => {
+        this.query = element;
+        if(this.query != '' && this.query != 'undefinied'){
+          this.changeCenter();
+        }
+        this.storage.set('lugar', null);
+      });
+     
+    }
+  
     addMarkers(pos,map,id){
      this.markers.push(new google.maps.Marker({
         position: pos,
@@ -112,6 +128,7 @@ export class HomePage {
     });
   }
 
+
   //VetanaModal funcion para abrir modal 
   async abrirModal(){
     
@@ -123,6 +140,36 @@ export class HomePage {
       }
     });
     await modal.present();
+  }
+
+  localizar(){
+    /*let geocoder = new google.maps.Geocoder();
+    let mapa = this.map;
+
+    geocoder.geocode({'address': this.query},function(results,status){
+      if(status === 'OK'){        
+        mapa.setCenter(results[0].geometry.location);
+
+        results.forEach(element => {
+          console.log(element.formatted_address)
+        });
+      }
+    });*/
+    
+    this.router.navigate(['/autocomplete'], { skipLocationChange: true });
+  }
+
+  changeCenter(){
+    let geocoder = new google.maps.Geocoder();
+    let mapa = this.map;
+
+    geocoder.geocode({'address': this.query},function(results,status){
+      if(status === 'OK'){        
+        mapa.setCenter(results[0].geometry.location);
+        mapa.setZoom(16);
+
+      }
+    });
   }
 
 

@@ -8,10 +8,7 @@ const routes: Routes = [
   { path: 'info', loadChildren: './pages/info/info.module#InfoPageModule' },
   { path: 'cct', loadChildren: './cct/cct.module#CctPageModule' },
   { path: 'acercade', loadChildren: './acercade/acercade.module#AcercadePageModule' },
-
-
-
-
+  { path: 'autocomplete', loadChildren: './modal/autocomplete/autocomplete.module#AutocompletePageModule' }
 ];
 
 @NgModule({
