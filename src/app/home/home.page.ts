@@ -6,6 +6,8 @@ import { HTTP } from '@ionic-native/http/ngx'
 import { HttpClient } from '@angular/common/http'
 import { Storage } from "@ionic/storage"
 import { Router, Params, Routes } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import { ModalFiltrosPage } from '../modal-filtros/modal-filtros.page';
 
 
 declare const google;
@@ -30,11 +32,16 @@ export class HomePage {
   query: String='';
   
   scannedCode = null;
-  constructor(private googleMaps: GoogleMaps, private barcodeScanner: BarcodeScanner,
-    private geolocation: Geolocation,private http: HTTP, private httpClient:HttpClient,
-    private storage: Storage, private router:Router) {
 
-      
+  constructor(private googleMaps: GoogleMaps,
+     private barcodeScanner: BarcodeScanner,
+    private geolocation: Geolocation,
+    private http: HTTP, 
+    private httpClient:HttpClient,
+    private storage: Storage, 
+    private router:Router,
+    private modalCtrl:ModalController,
+    ) {
       this.geolocation.getCurrentPosition().then((resp)=>{
         this.loadMap(resp.coords.latitude,resp.coords.longitude);
       }).catch((error)=>{
@@ -125,6 +132,20 @@ export class HomePage {
     });
   }
 
+
+  //VetanaModal funcion para abrir modal 
+  async abrirModal(){
+    
+    const modal =  await this.modalCtrl.create({
+      component:ModalFiltrosPage,
+      componentProps: {
+    'prop1': 'value',
+    'prop2': 'value2'
+      }
+    });
+    await modal.present();
+  }
+
   localizar(){
     /*let geocoder = new google.maps.Geocoder();
     let mapa = this.map;
@@ -154,5 +175,6 @@ export class HomePage {
       }
     });
   }
+
 
 }
