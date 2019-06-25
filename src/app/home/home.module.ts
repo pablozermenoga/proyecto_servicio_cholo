@@ -10,8 +10,13 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 import { HomePage } from './home.page';
 import { Routes, RouterModule } from '@angular/router';
+import { ModalFiltrosPage } from '../modal-filtros/modal-filtros.page';
+import { ModalFiltrosPageModule } from '../modal-filtros/modal-filtros.module';
 
 @NgModule({
+  entryComponents:[
+    ModalFiltrosPage
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -22,7 +27,8 @@ import { Routes, RouterModule } from '@angular/router';
         path: '',
         component: HomePage
       }
-    ])
+    ]),
+    ModalFiltrosPageModule,
   ],
   providers:[
     GoogleMaps,
