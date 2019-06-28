@@ -111,7 +111,11 @@ export class HomePage {
         position: pos,
         map: map,
         title: "Hello",
-        id: id
+        icon: {
+                url:'../assets/icon/university.png',
+                scaledSize:new google.maps.Size(30, 30),
+              },
+        id: id,
       })
       );
       this.markers[this.markers.length-1].addListener('click',(event)=>{
