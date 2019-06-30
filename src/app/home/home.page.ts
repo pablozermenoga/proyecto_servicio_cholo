@@ -98,13 +98,6 @@ export class HomePage {
     }
 
     ionViewDidEnter(){
-      this.storage.get('lugar').then(element => {
-        this.query = element;
-        if(this.query != '' && this.query != 'undefinied'){
-          this.changeCenter();
-        }
-        this.storage.set('lugar', null);
-      });
      
     }
   
@@ -190,22 +183,6 @@ export class HomePage {
 
     this.markers = [];
   }
-  localizar(){
-    /*let geocoder = new google.maps.Geocoder();
-    let mapa = this.map;
-
-    geocoder.geocode({'address': this.query},function(results,status){
-      if(status === 'OK'){        
-        mapa.setCenter(results[0].geometry.location);
-
-        results.forEach(element => {
-          console.log(element.formatted_address)
-        });
-      }
-    });*/
-    
-    this.router.navigate(['/autocomplete'], { skipLocationChange: true });
-  }
 
   changeCenter(){
     let geocoder = new google.maps.Geocoder();
@@ -234,6 +211,10 @@ export class HomePage {
     });  
     await modal.present();
     const { data } = await modal.onDidDismiss();
+    this.query = data.lugar;
+        if(this.query != null){
+          this.changeCenter();
+        }
     /*this.filtros(data.media,data.mediasuperior,data.superior,data.publica,data.privada);
     this.httpClient.get('http://sigmovil.herokuapp.com/filtroescuelas', {
       params:{

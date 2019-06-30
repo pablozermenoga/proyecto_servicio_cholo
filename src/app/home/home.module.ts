@@ -1,3 +1,5 @@
+import { AutocompletePageModule } from './../modal/autocomplete/autocomplete.module';
+import { AutocompletePage } from './../modal/autocomplete/autocomplete.page';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
@@ -15,7 +17,8 @@ import { ModalFiltrosPageModule } from '../modal-filtros/modal-filtros.module';
 
 @NgModule({
   entryComponents:[
-    ModalFiltrosPage
+    ModalFiltrosPage,
+    AutocompletePage
   ],
   imports: [
     CommonModule,
@@ -29,6 +32,7 @@ import { ModalFiltrosPageModule } from '../modal-filtros/modal-filtros.module';
       }
     ]),
     ModalFiltrosPageModule,
+    AutocompletePageModule
   ],
   providers:[
     GoogleMaps,

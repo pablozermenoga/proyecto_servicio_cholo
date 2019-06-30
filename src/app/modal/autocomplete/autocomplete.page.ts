@@ -48,4 +48,10 @@ export class AutocompletePage implements OnInit {
       "lugar":item
     });
   }
+
+  cancelar(){
+    this.modalCtrl.dismiss({
+      "lugar":null
+    });
+  }
 }

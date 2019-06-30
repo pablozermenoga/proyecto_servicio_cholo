@@ -7,19 +7,11 @@ import { IonicModule } from '@ionic/angular';
 
 import { AutocompletePage } from './autocomplete.page';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: AutocompletePage
-  }
-];
-
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
   ],
   declarations: [AutocompletePage]
 })
