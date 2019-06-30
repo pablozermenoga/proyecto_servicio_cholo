@@ -9,16 +9,28 @@
   <div #map id="map"> 
   </div>
 
-  
-  <ion-button (click)="abrirModal()">
+  <!--
+    <ion-button (click)="abrirModal()">
       Filtros
     </ion-button>
-
+-->
   <ion-fab vertical="bottom" horizontal="start" slot="fixed">
-      <ion-fab-button (click)="scanCode()">
-        <ion-icon name="qr-scanner"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+    <ion-fab-button>
+        <ion-icon name="arrow-dropup-circle"></ion-icon>    
+    </ion-fab-button>  
+    
+    <ion-fab-list side="top">
+        <ion-fab-button (click)="scanCode()">
+            <ion-icon name="qr-scanner"></ion-icon>
+        </ion-fab-button>
+    </ion-fab-list>
+    
+    <ion-fab-list side="end">
+        <ion-fab-button (click)="abrirModal()">
+            <ion-icon name="locate"></ion-icon>
+        </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 
 </ion-content>
 
