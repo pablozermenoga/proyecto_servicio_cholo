@@ -1,3 +1,4 @@
+import { AutocompletePage } from './../modal/autocomplete/autocomplete.page';
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { GoogleMap,GoogleMaps,GoogleMapOptions,GoogleMapsEvent } from '@ionic-native/google-maps/ngx'
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -8,6 +9,7 @@ import { Storage } from "@ionic/storage"
 import { Router, Params, Routes } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalFiltrosPage } from '../modal-filtros/modal-filtros.page';
+
 
 
 declare const google;
@@ -218,4 +220,39 @@ export class HomePage {
   }
 
 
+  async abrirAutoComplete(){
+    
+    const modal =  await this.modalCtrl.create({
+      component:AutocompletePage,
+      componentProps: {
+    'media': this.media,
+    'mediasuperior': this.mediasuperior,
+    'superior': this.superior,
+    'publica': this.publica,
+    'privada':this.privada
+      }
+    });  
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    /*this.filtros(data.media,data.mediasuperior,data.superior,data.publica,data.privada);
+    this.httpClient.get('http://sigmovil.herokuapp.com/filtroescuelas', {
+      params:{
+        'media': data.media,
+        'mediasuperior': data.mediasuperior,
+        'superior': data.superior,
+        'publica': data.publica,
+        'privada':data.privada
+      }
+    }).subscribe(data => {
+      for(let i in data){
+        let position ={lat:Number(data[i].lat),lng:Number(data[i].lng)};
+    //console.log(position);
+    this.addMarkers(position,this.map,data[i].id);
+        //console.log(data[i].lat);
+      }
+    });
+
+
+    console.log(data.primaria);*/
+  }
 }

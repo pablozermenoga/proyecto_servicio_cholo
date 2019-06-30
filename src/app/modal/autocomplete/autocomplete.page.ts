@@ -1,7 +1,9 @@
+import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import { GoogleMap,GoogleMaps,GoogleMapOptions,GoogleMapsEvent } from '@ionic-native/google-maps/ngx'
 import { Storage } from '@ionic/storage'
+
 
 
 declare var google;
@@ -14,12 +16,13 @@ export class AutocompletePage implements OnInit {
 
   query: String;
   list: any = [];
-  constructor(private cdr: ChangeDetectorRef, private storage: Storage, private router: Router) { }
+  constructor(private cdr: ChangeDetectorRef, private storage: Storage, private router: Router,
+    private modalCtrl: ModalController) { }
 
   ngOnInit() {
   }
 
-  localizar(){
+  async localizar(){
 
    
     let geocoder = new google.maps.Geocoder();
@@ -40,7 +43,9 @@ export class AutocompletePage implements OnInit {
   }
 
   evento(item){
-    this.storage.set('lugar',item);
-    this.router.navigate(['/home'], { skipLocationChange: true } );
+
+    this.modalCtrl.dismiss({
+      "lugar":item
+    });
   }
 }
