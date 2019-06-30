@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 //importacion del modal 
 import { ModalController } from '@ionic/angular';
 
@@ -8,6 +8,13 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./modal-filtros.page.scss'],
 })
 export class ModalFiltrosPage implements OnInit {
+
+  @Input() media: boolean;
+  @Input() mediasuperior: boolean;
+  @Input() superior: boolean;
+  @Input() publica: boolean;
+  @Input() privada: boolean;
+
 //mandar llamar al modal en el contructor
   constructor(private modalCtrl: ModalController) {
   }
@@ -17,7 +24,13 @@ export class ModalFiltrosPage implements OnInit {
   }
   //funcion para salir de la ventana modal 
   Salir(){
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss({
+    'media': this.media,
+    'mediasuperior': this.mediasuperior,
+    'superior': this.superior,
+    'publica': this.publica,
+    'privada':this.privada
+    });
   }
 
 }

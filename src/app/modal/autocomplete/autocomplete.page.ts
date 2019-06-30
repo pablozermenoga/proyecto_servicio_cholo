@@ -29,6 +29,7 @@ export class AutocompletePage implements OnInit {
       if(status === 'OK'){        
         this.list = [];
         results.forEach(element => {
+          element.geometry.lat;
           l.push(element.formatted_address);
         });
         

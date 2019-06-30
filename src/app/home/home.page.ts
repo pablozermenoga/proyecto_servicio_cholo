@@ -20,17 +20,18 @@ export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
-  instituciones: any=[
-    {id:1,lat:21.486315,lng:-104.852716},
-    {id:2,lat:21.483655,lng:-104.859106},
-    {id:3,lat:21.483697,lng:-104.859083},
-    {id:4,lat:21.484562,lng:-104.850336},
-    {id:5,lat:21.485337,lng:-104.853760},
-  ];
-
   markers: any=[];
   query: String='';
+  
   scannedCode = null;
+
+  media: boolean=true;
+  mediasuperior: boolean=true;
+  superior: boolean=true;
+  publica: boolean=true;
+  privada: boolean=true;
+
+  
 
   constructor(private googleMaps: GoogleMaps,
      private barcodeScanner: BarcodeScanner,
@@ -58,7 +59,7 @@ export class HomePage {
       });
   
     
-      var marker = new google.maps.Marker({
+      /*var marker = new google.maps.Marker({
         position: pos,
         map: mapa,
         title: "Hello"
@@ -70,9 +71,10 @@ export class HomePage {
   
       marker.addListener("click",function(){
         
-      });
+      });*/
 
-        this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas', {}).subscribe(data => {
+        this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas', {
+        }).subscribe(data => {
           for(let i in data){
             let position ={lat:Number(data[i].lat),lng:Number(data[i].lng)};
         //console.log(position);
@@ -109,7 +111,11 @@ export class HomePage {
         position: pos,
         map: map,
         title: "Hello",
-        id: id
+        icon: {
+                url:'../assets/icon/university.png',
+                scaledSize:new google.maps.Size(30, 30),
+              },
+        id: id,
       })
       );
       this.markers[this.markers.length-1].addListener('click',(event)=>{
@@ -125,6 +131,8 @@ export class HomePage {
     scanCode() {
       this.barcodeScanner.scan().then(barcodeData => {
         this.scannedCode = barcodeData.text;
+        this.storage.set("id",barcodeData.text);
+        this.router.navigate(['/info']);
     });
   }
 
@@ -135,13 +143,51 @@ export class HomePage {
     const modal =  await this.modalCtrl.create({
       component:ModalFiltrosPage,
       componentProps: {
-    'prop1': 'value',
-    'prop2': 'value2'
+    'media': this.media,
+    'mediasuperior': this.mediasuperior,
+    'superior': this.superior,
+    'publica': this.publica,
+    'privada':this.privada
+      }
+    });  
+    await modal.present();
+    const { data } = await modal.onDidDismiss();
+    this.filtros(data.media,data.mediasuperior,data.superior,data.publica,data.privada);
+    this.httpClient.get('http://sigmovil.herokuapp.com/filtroescuelas', {
+      params:{
+        'media': data.media,
+        'mediasuperior': data.mediasuperior,
+        'superior': data.superior,
+        'publica': data.publica,
+        'privada':data.privada
+      }
+    }).subscribe(data => {
+      for(let i in data){
+        let position ={lat:Number(data[i].lat),lng:Number(data[i].lng)};
+    //console.log(position);
+    this.addMarkers(position,this.map,data[i].id);
+        //console.log(data[i].lat);
       }
     });
-    await modal.present();
+
+
+    console.log(data.primaria);
   }
 
+
+  filtros(m,ms,s,pu,pr){
+    this.media = m;
+    this.mediasuperior = ms;
+    this.superior = s;
+    this.publica = pu;
+    this.privada = pr;
+
+    this.markers.forEach(element => {
+      element.setMap(null);
+    });
+
+    this.markers = [];
+  }
   localizar(){
     /*let geocoder = new google.maps.Geocoder();
     let mapa = this.map;
@@ -167,7 +213,6 @@ export class HomePage {
       if(status === 'OK'){        
         mapa.setCenter(results[0].geometry.location);
         mapa.setZoom(16);
-
       }
     });
   }
