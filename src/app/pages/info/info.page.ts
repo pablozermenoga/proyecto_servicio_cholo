@@ -45,5 +45,24 @@ export class InfoPage implements OnInit {
 
   ngOnInit() {
   }
-
+  slider=[
+    {
+      imagen: "../assets/img/tec_tepic_cb.jpg"
+    },
+    {
+      imagen: "../assets/img/tec_tepic_liia.jpg"
+    },
+    {
+      imagen: "../assets/img/tec_tepic_ud.jpg"
+    },
+    {
+      imagen: "../assets/img/tec_tepic_cb.jpg"
+    },
+    {
+      imagen: "../assets/img/tec_tepic_liia.jpg"
+    },
+    {
+      imagen: "../assets/img/tec_tepic_ud.jpg"
+    }
+  ];
 }
