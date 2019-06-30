@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>modal_filtros</ion-title>
+    <ion-title class="centrar font">Filtrar</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,25 +9,25 @@
   <br>
 
   <ion-grid>
-      <ion-label>ESCUELAS MEDIA</ion-label>
+      <ion-label class="font">ESCUELAS MEDIA</ion-label>
       <ion-checkbox color="primary" [(ngModel)]="media"></ion-checkbox>
   </ion-grid>
   <ion-grid>
-      <ion-label>ESCUELAS MEDIA SUPERIOR</ion-label>
+      <ion-label class="font">ESCUELAS MEDIA SUPERIOR</ion-label>
       <ion-checkbox color="primary" [(ngModel)]="mediasuperior"></ion-checkbox>
   </ion-grid>
   <ion-grid>
-      <ion-label>ESCUELAS SUPERIOR</ion-label>
+      <ion-label class="font">ESCUELAS SUPERIOR</ion-label>
       <ion-checkbox color="primary" [(ngModel)]="superior"></ion-checkbox>
   </ion-grid>
   <br>
   <ion-grid>
-    <ion-label>ESCUELAS PUBLICAS</ion-label>
+    <ion-label class="font">ESCUELAS PUBLICAS</ion-label>
     <ion-checkbox color="primary" [(ngModel)]="publica"></ion-checkbox>
 </ion-grid>
 <ion-grid>
-  <ion-label>ESCUELAS PRIVADAS</ion-label>
+  <ion-label class="font">ESCUELAS PRIVADAS</ion-label>
   <ion-checkbox color="primary" [(ngModel)]="privada"></ion-checkbox>
 </ion-grid>
 </ion-content>
-<ion-button (click)="Salir()" color="primary" expand="block" fill="solid" slot="fixed" >Aceptar</ion-button>
+<ion-button (click)="Salir()" color="primary" expand="block" fill="solid" slot="fixed">Aceptar</ion-button>
