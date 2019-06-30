@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-button (click)="Salir()" color="primary" extend="full">Salir</ion-button>
+  
   <br>
 
   <ion-grid>
@@ -20,6 +20,7 @@
       <ion-label>ESCUELAS SUPERIOR</ion-label>
       <ion-checkbox color="primary" [(ngModel)]="superior"></ion-checkbox>
   </ion-grid>
+  <br>
   <ion-grid>
     <ion-label>ESCUELAS PUBLICAS</ion-label>
     <ion-checkbox color="primary" [(ngModel)]="publica"></ion-checkbox>
@@ -29,3 +30,4 @@
   <ion-checkbox color="primary" [(ngModel)]="privada"></ion-checkbox>
 </ion-grid>
 </ion-content>
+<ion-button (click)="Salir()" color="primary" expand="block" fill="solid" slot="fixed" >Aceptar</ion-button>
