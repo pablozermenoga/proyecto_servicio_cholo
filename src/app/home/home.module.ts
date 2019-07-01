@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { AutocompletePageModule } from './../modal/autocomplete/autocomplete.module';
 import { AutocompletePage } from './../modal/autocomplete/autocomplete.page';
 import { NgModule } from '@angular/core';
@@ -25,6 +26,7 @@ import { ModalFiltrosPageModule } from '../modal-filtros/modal-filtros.module';
     FormsModule,
     IonicModule,
     NgxQRCodeModule,
+    HttpClientModule,
     RouterModule.forChild([
       {
         path: '',

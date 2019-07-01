@@ -106,10 +106,7 @@ export class HomePage {
         position: pos,
         map: map,
         title: "Hello",
-        icon: {
-                url:'../assets/icon/university.png',
-                scaledSize:new google.maps.Size(30, 30),
-              },
+       
         id: id,
       })
       );
@@ -163,6 +160,8 @@ export class HomePage {
     this.addMarkers(position,this.map,data[i].id);
         //console.log(data[i].lat);
       }
+    },error=>{
+      alert(error);
     });
 
 
