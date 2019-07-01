@@ -24,3 +24,6 @@ const routes: Routes = [
   declarations: [InfoPage]
 })
 export class InfoPageModule {}
+
+
+

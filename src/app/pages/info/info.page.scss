@@ -1,0 +1,41 @@
+@font-face{
+    font-family:'Roboto';
+    src: url('/src/assets/fonts/roboto.woff2') format('woff2');
+}
+
+.font{
+    font-family: 'Roboto', sans-serif;
+    color:#373737;
+}
+.centrar{
+    text-align: center;
+}
+.tam-titulo{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.tam-info-titulo{
+    font-size: 1.1em;
+    font-weight: bold; 
+}
+.tam-texto{
+    font-size: 1em;
+}
+.pager{
+    padding-bottom: 30px;
+}
+
+.slider-pager-page 
+{
+ stroke: #9f0 !important;
+}
+
+.slider-pager-page.active
+{
+stroke: #f90 !important;
+}
+
+hr{
+    background:lightgray;
+    width:98%;
+}
