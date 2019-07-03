@@ -12,6 +12,7 @@ import { ModalFiltrosPage } from '../modal-filtros/modal-filtros.page';
 
 
 
+
 declare const google;
 @Component({
   selector: 'app-home',
@@ -74,14 +75,24 @@ export class HomePage {
       marker.addListener("click",function(){
         
       });*/
-
+        let position = {};
+        let func = this.addMarkers;
         this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas', {
         }).subscribe(data => {
           for(let i in data){
-            let position ={lat:Number(data[i].lat),lng:Number(data[i].lng)};
-        //console.log(position);
-        this.addMarkers(position,mapa,data[i].id);
-            //console.log(data[i].lat);
+           let geocoder = new google.maps.Geocoder();
+           geocoder.geocode({'address': data[i]['Munucipio']+", "+data[i]['Localidad']+', '+data[i]['Domicilio']},(results,status)=>{
+    
+             
+            if(status === 'OK'){        
+              position= {lat:Number(results[0].geometry.location.lat()),lng:Number(results[0].geometry.location.lng())}; 
+              console.log(position)
+            }
+
+              this.addMarkers(position,mapa,data[i].id);
+            
+          });
+           //console.log(data[i].lat);
           }
           
         });
@@ -106,7 +117,10 @@ export class HomePage {
         position: pos,
         map: map,
         title: "Hello",
-       
+        icon: {
+                url:'../assets/icon/university.png',
+                scaledSize:new google.maps.Size(30, 30),
+              },
         id: id,
       })
       );
@@ -160,8 +174,6 @@ export class HomePage {
     this.addMarkers(position,this.map,data[i].id);
         //console.log(data[i].lat);
       }
-    },error=>{
-      alert(error);
     });
 
 
@@ -186,9 +198,12 @@ export class HomePage {
   changeCenter(){
     let geocoder = new google.maps.Geocoder();
     let mapa = this.map;
+    let pos = '';
 
     geocoder.geocode({'address': this.query},function(results,status){
       if(status === 'OK'){        
+        pos = results[0].geometry.location;
+        console.log(pos);
         mapa.setCenter(results[0].geometry.location);
         mapa.setZoom(16);
       }
@@ -234,5 +249,9 @@ export class HomePage {
 
 
     console.log(data.primaria);*/
+  }
+
+   async delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 }
