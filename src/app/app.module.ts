@@ -15,7 +15,7 @@ import {BarcodeScanner} from '@ionic-native/barcode-scanner/ngx';
 import { HTTP } from '@ionic-native/http/ngx'
 import { HttpClientModule } from '@angular/common/http'
 import { IonicStorageModule } from '@ionic/storage'
-
+import { NativeGeocoder } from '@ionic-native/native-geocoder/ngx'
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +28,7 @@ import { IonicStorageModule } from '@ionic/storage'
     HTTP,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     BarcodeScanner,
+    NativeGeocoder
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,5 @@
 import { AutocompletePage } from './../modal/autocomplete/autocomplete.page';
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { GoogleMap,GoogleMaps,GoogleMapOptions,GoogleMapsEvent } from '@ionic-native/google-maps/ngx'
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
@@ -9,6 +9,7 @@ import { Storage } from "@ionic/storage"
 import { Router, Params, Routes } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalFiltrosPage } from '../modal-filtros/modal-filtros.page';
+import { NativeGeocoder,NativeGeocoderOptions,NativeGeocoderResult } from '@ionic-native/native-geocoder/ngx';
 
 
 
@@ -44,6 +45,8 @@ export class HomePage {
     private storage: Storage, 
     private router:Router,
     private modalCtrl:ModalController,
+    private nativeGeocoder: NativeGeocoder,
+    private zone: NgZone
     ) {
       this.geolocation.getCurrentPosition().then((resp)=>{
         this.loadMap(resp.coords.latitude,resp.coords.longitude);
@@ -53,7 +56,7 @@ export class HomePage {
 
     }
 
-    loadMap(latitud, longitud){
+    async loadMap(latitud, longitud){
       let pos = { lat: latitud, lng: longitud }
       var mapa = new google.maps.Map(this.mapElement.nativeElement,{
         zoom: 16,
@@ -61,7 +64,7 @@ export class HomePage {
           mapTypeId: 'roadmap'
       });
   
-    
+      
       /*var marker = new google.maps.Marker({
         position: pos,
         map: mapa,
@@ -75,27 +78,9 @@ export class HomePage {
       marker.addListener("click",function(){
         
       });*/
-        let position = {};
-        let func = this.addMarkers;
-        this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas', {
-        }).subscribe(data => {
-          for(let i in data){
-           let geocoder = new google.maps.Geocoder();
-           geocoder.geocode({'address': data[i]['Munucipio']+", "+data[i]['Localidad']+', '+data[i]['Domicilio']},(results,status)=>{
-    
-             
-            if(status === 'OK'){        
-              position= {lat:Number(results[0].geometry.location.lat()),lng:Number(results[0].geometry.location.lng())}; 
-              console.log(position)
-            }
-
-              this.addMarkers(position,mapa,data[i].id);
-            
-          });
-           //console.log(data[i].lat);
-          }
-          
-        });
+       this.zone.runOutsideAngular(()=>{
+        this.getInstituciones(mapa);
+       });
 
       /*this.instituciones.forEach(element => {
         let position ={lat:element.lat,lng:element.lng};
@@ -110,6 +95,36 @@ export class HomePage {
 
     ionViewDidEnter(){
      
+    }
+
+    async getInstituciones(mapa){
+       let position = {};
+        
+        this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas', {
+        }).subscribe(data => {
+          for(let i in data){
+            let options: NativeGeocoderOptions = {
+              useLocale: true,
+              maxResults: 5
+          };
+
+          position = {lat:Number(data[i].lat),lng:Number(data[i].lng)};
+
+
+          /*this.nativeGeocoder.forwardGeocode(data[i]['Munucipio']+", "+data[i]['Localidad']+', '+data[i]['Domicilio'], options).then(async (result: NativeGeocoderResult[]) =>{
+          position= {lat:Number(result[0].latitude),lng:Number(result[0].longitude)}  
+          //console.log('The coordinates are latitude=' + result[0].latitude + ' and longitude=' + result[0].longitude)
+         
+          this.addMarkers(position,mapa,data[i].id);
+          }).catch((error: any) => console.log(error));*/
+
+              this.addMarkers(position,mapa,data[i].id);
+            
+         // });
+           //console.log(data[i].lat);
+          }
+          
+        });
     }
   
     addMarkers(pos,map,id){
