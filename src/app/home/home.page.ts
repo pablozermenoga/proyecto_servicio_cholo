@@ -118,7 +118,7 @@ export class HomePage {
           this.addMarkers(position,mapa,data[i].id);
           }).catch((error: any) => console.log(error));*/
 
-              this.addMarkers(position,mapa,data[i].id);
+              this.addMarkers(position,mapa,data[i].id,data[i].Nombre_Inst);
             
          // });
            //console.log(data[i].lat);
@@ -127,11 +127,11 @@ export class HomePage {
         });
     }
   
-    addMarkers(pos,map,id){
+    addMarkers(pos,map,id,name){
      this.markers.push(new google.maps.Marker({
         position: pos,
         map: map,
-        title: "Hello",
+        title: name,
         icon: {
                 url:'../assets/icon/university.png',
                 scaledSize:new google.maps.Size(30, 30),
@@ -186,7 +186,7 @@ export class HomePage {
       for(let i in data){
         let position ={lat:Number(data[i].lat),lng:Number(data[i].lng)};
     //console.log(position);
-    this.addMarkers(position,this.map,data[i].id);
+    this.addMarkers(position,this.map,data[i].id,data[i].Nombre_Inst);
         //console.log(data[i].lat);
       }
     });
