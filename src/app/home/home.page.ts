@@ -146,7 +146,8 @@ export class HomePage {
 
     navigateto(id){
       this.storage.set("id",id);
-        this.router.navigate(['/info']);
+      this.router.navigate(['/info']);
+      this.storage.set("ventana",1);
     }
 
     scanCode() {
@@ -268,5 +269,9 @@ export class HomePage {
 
    async delay(ms: number) {
     return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
+  busquedaNombre(){
+    this.router.navigate(['/busqueda-isntitucion']);
   }
 }

@@ -1,9 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>busqueda-isntitucion</ion-title>
+    <ion-searchbar type="text" 
+                   placeholder="Buscar institución..."
+                   (ionInput)="getItems($event)">
+    </ion-searchbar>
   </ion-toolbar>
-</ion-header>
+</ion-header> 
 
 <ion-content>
-
+  <ion-list *ngIf="isItemAvailable">
+    <ion-item (click)="info(item.id)" *ngFor="let item of list">
+      {{item.nombre}}
+    </ion-item>
+  </ion-list>
 </ion-content>
+<ion-button (click)="cancelar()" color="primary" expand="block" fill="solid" slot="fixed">Cancelar</ion-button>

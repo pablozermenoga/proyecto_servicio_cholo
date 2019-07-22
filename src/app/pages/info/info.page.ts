@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class InfoPage implements OnInit {
   
+  anterior:Number=0;
   nombre: String;
   subsistema: String;
   correo: String;
@@ -23,6 +24,7 @@ export class InfoPage implements OnInit {
   status: String;
 
   constructor(public httpClient: HttpClient, private storage: Storage, private router: Router) { 
+    this.storage.get("ventana").then((item)=>{this.anterior=item;});
     this.storage.get('id').then((item)=>{
       this.httpClient.get("http://sigmovil.herokuapp.com/getescuela/"+item,{}).subscribe(data =>{
         console.log(item);
@@ -40,7 +42,12 @@ export class InfoPage implements OnInit {
   }
 
   back(){
-    this.router.navigate(['/home'], { skipLocationChange: true } );
+    if(this.anterior==1){
+      this.router.navigate(['/home'], { skipLocationChange: true } );
+    }else{
+      this.router.navigate(['/busqueda-isntitucion'], { skipLocationChange: true } );
+    }
+    
   }
 
   ngOnInit() {
