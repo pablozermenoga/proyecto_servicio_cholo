@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-searchbar [(ngModel)]="query" (click)="abrirAutoComplete()"></ion-searchbar>
+    <ion-searchbar placeholder="Buscar dirección..." [(ngModel)]="query" (click)="abrirAutoComplete()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -28,6 +28,9 @@
     <ion-fab-list side="end">
         <ion-fab-button (click)="abrirModal()">
             <ion-icon name="locate"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button (click)="busquedaNombre()">
+            <ion-icon name="search"></ion-icon>
         </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
