@@ -111,13 +111,23 @@ export class HomePage {
           position = {lat:Number(data[i].lat),lng:Number(data[i].lng)};
 
 
-          /*this.nativeGeocoder.forwardGeocode(data[i]['Munucipio']+", "+data[i]['Localidad']+', '+data[i]['Domicilio'], options).then(async (result: NativeGeocoderResult[]) =>{
+         /* this.nativeGeocoder.forwardGeocode(data[i]['Munucipio']+", "+data[i]['Localidad']+', '+data[i]['Domicilio'], options).then(async (result: NativeGeocoderResult[]) =>{
           position= {lat:Number(result[0].latitude),lng:Number(result[0].longitude)}  
           //console.log('The coordinates are latitude=' + result[0].latitude + ' and longitude=' + result[0].longitude)
          
-          this.addMarkers(position,mapa,data[i].id);
+          position = {lat:Number(result[0].latitude),lng:Number(result[0].longitude)};
+          this.httpClient.get('http://sigmovil.herokuapp.com/coordenadas/'+data[i].id,{
+              params:{
+                lat:position['lat'],
+                lng:position["lng"]
+              }
+          }).subscribe(data=>{
+
+          });
           }).catch((error: any) => console.log(error));*/
 
+          
+          
               this.addMarkers(position,mapa,data[i].id,data[i].Nombre_Inst);
             
          // });
