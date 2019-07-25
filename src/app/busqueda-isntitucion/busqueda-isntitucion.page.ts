@@ -25,8 +25,8 @@ export class BusquedaIsntitucionPage implements OnInit {
     this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas').subscribe(data =>{
       for(let i in data){
         console.log(data[i].Nombre_Inst);
-        this.list.push({nombre:data[i].Nombre_Inst,id:data[i].id/*,clave:data[i].clave*/});
-        this.listfija.push({nombre:data[i].Nombre_Inst,id:data[i].id/*,clave:data[i].clave*/});
+        this.list.push({nombre:data[i].Nombre_Inst,id:data[i].id,clave:data[i].clave});
+        this.listfija.push({nombre:data[i].Nombre_Inst,id:data[i].id,clave:data[i].clave});
       }
     });
   }
@@ -39,7 +39,15 @@ export class BusquedaIsntitucionPage implements OnInit {
       this.list=this.listfija;
       this.list=this.list.filter((item)=>{
         return(item.nombre.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
+      });
+    }
+    console.log(this.list)
+    if(this.list.length == 0 && val && val.trim()!=''){
+      this.isItemAvailable=true;
+      this.list=this.listfija;
+      this.list=this.list.filter((item)=>{
+        return(item.clave.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
     }
   }
 
