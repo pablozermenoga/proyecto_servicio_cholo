@@ -1,9 +1,38 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Acerca de..</ion-title>
+      <ion-buttons start>  
+        <button ion-botton icon-only (click)="Salir()">
+              <ion-icon name="arrow-round-back"></ion-icon>
+          </button>
+      </ion-buttons>
+      <ion-title>Acerca de la aplicacion</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <h1>Contenido principal</h1>
+  <ion-card>
+      <img src="assets/img/sep.jpg">
+      <ion-card-content>
+          <ion-card-title>Mi escuela</ion-card-title>
+          <p style="text-align:justify">
+              Aqui se mostrará un poco de informacion sobre la app y sobre como se certifica una escuela
+          </p>
+      </ion-card-content>
+  </ion-card>
+  <br>
+  <ion-card>
+      <ion-card-content>
+          <ion-card-title>¿Como es el proceso de certificacion de una escuela?</ion-card-title>
+          <p style="text-align:justify">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sint quia mollitia ex soluta dolores veniam exercitationem reprehenderit deserunt adipisci, porro, assumenda voluptatum qui delectus, corrupti tempore fuga dicta neque explicabo.
+          </p>
+      </ion-card-content>
+  </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+      <h6><b>Contacto: correo@semssicyt.com</b></h6>
+      <h6><b>Teléfono: 311-111-1111</b></h6>
+  </ion-toolbar>
+</ion-footer>

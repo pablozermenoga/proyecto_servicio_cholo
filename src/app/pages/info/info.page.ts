@@ -22,6 +22,7 @@ export class InfoPage implements OnInit {
   municipio: String;
   telefono: String;
   status: String;
+  slider=[];
 
   constructor(public httpClient: HttpClient, private storage: Storage, private router: Router) { 
     this.storage.get("ventana").then((item)=>{this.anterior=item;});
@@ -36,6 +37,18 @@ export class InfoPage implements OnInit {
         this.municipio = data['Municipio'];
         this.telefono = data['Telefono'];
         this.status = data['Status'];
+        let imgs=data['images'].split(',');
+        for(let i in imgs){
+          console.log('https://sigmovil.herokuapp.com/img/'+data['id']+'/'+imgs[i]);
+            this.slider.push('https://sigmovil.herokuapp.com/img/'+data['id']+'/'+imgs[i]);
+        };      
+        if(imgs!=null){
+          console.log("IMAGEN ENCONTRADA");
+        }else{
+        console.log("IMAGEN NO EXISTENTE");
+         this.slider=["assets/img/notfound.jpg"];
+        }
+   
   
     }) 
     });
@@ -52,7 +65,7 @@ export class InfoPage implements OnInit {
 
   ngOnInit() {
   }
-  slider=[
+ /* slider=[
     {
       imagen: "../assets/img/tec_tepic_cb.jpg"
     },
@@ -71,5 +84,5 @@ export class InfoPage implements OnInit {
     {
       imagen: "../assets/img/tec_tepic_ud.jpg"
     }
-  ];
+  ];*/
 }
