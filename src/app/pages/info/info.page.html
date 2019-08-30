@@ -1,81 +1,99 @@
 <ion-header>
-    <ion-toolbar>
-      <ion-title class="centrar font">
-        Información
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+      <ion-grid>
+          <ion-row>
+            <ion-col>
+                <ion-icon name="arrow-back" (click)="back()"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="centrar font">
+                <ion-label position="floating" class="tam-titulo">{{nombre}}</ion-label>
+            </ion-col>
+          </ion-row> 
+</ion-grid>      
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-  <ion-grid>
-      <ion-row>
-        <ion-col>
-            <ion-icon name="arrow-back" (click)="back()"></ion-icon>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="centrar font">
-            <ion-label position="floating" class="tam-titulo">{{nombre}}</ion-label>
-        </ion-col>
-      </ion-row> 
-      <ion-row>
-        <ion-slides pager="true" class="pager">
-            <ion-slide *ngFor="let slide of slider">
-                <ion-img [src]="slide"></ion-img>
-            </ion-slide>
-        </ion-slides>
-    </ion-row>
+<ion-grid>
     <ion-row>
-        <ion-col>
-                <ion-label class="tam-info-titulo font">Nombre de la institución:</ion-label>
-                <br/>
-                <ion-label class="tam-texto font">{{nombre}}</ion-label> 
-        </ion-col>
-    </ion-row>
-    <hr/>
+      <ion-slides pager="true" class="pager">
+          <ion-slide *ngFor="let slide of slider">
+              <img [src]="slide"/>
+          </ion-slide>
+      </ion-slides>
+  </ion-row>
 
-    <ion-row>
-        <ion-col>
-                <ion-label class="tam-info-titulo font">Subsistema:</ion-label>
-                <br/>
-                <ion-label class="tam-texto font">{{subsistema}}</ion-label> 
-        </ion-col>
-    </ion-row>
-    <hr/>
+  <ion-row>
+      <ion-col>
+              <ion-label class="tam-info-titulo font">Clave centro de trabajo:</ion-label>
+              <br/>
+              <ion-label class="tam-texto font">-</ion-label> 
+      </ion-col>
+  </ion-row>
+  <hr/>
 
-    <ion-row>
-        <ion-col>
-                <ion-label class="tam-info-titulo font">Dirección:</ion-label>
-                <br/>
-                <ion-label class="tam-texto font">{{domicilio}}, {{localidad}}, {{municipio}}</ion-label> 
-        </ion-col>
-    </ion-row>
-    <hr/>
-    <ion-row>
-            <ion-col>
-                    <ion-label class="tam-info-titulo font">Correo electrónico:</ion-label>
-                    <br/>
-                    <ion-label class="tam-texto font">{{correo}}</ion-label> 
-            </ion-col>
-    </ion-row>
-    <hr/>
+  <ion-row>
+      <ion-col>
+              <ion-label class="tam-info-titulo font">Nombre de la institución:</ion-label>
+              <br/>
+              <ion-label class="tam-texto font">{{nombre}}</ion-label> 
+      </ion-col>
+  </ion-row>
+  <hr/>
 
-    <ion-row>
-            <ion-col>
-                    <ion-label class="tam-info-titulo font">Teléfono:</ion-label>
-                    <br/>
-                    <ion-label class="tam-texto font">{{telefono}}</ion-label> 
-            </ion-col>
-    </ion-row>
-    <hr/>
+  <ion-row>
+      <ion-col>
+              <ion-label class="tam-info-titulo font">Subsistema:</ion-label>
+              <br/>
+              <ion-label class="tam-texto font">{{subsistema}}</ion-label> 
+      </ion-col>
+  </ion-row>
+  <hr/>
 
-    <ion-row>
-            <ion-col>
-                    <ion-label class="tam-info-titulo font">Activo:</ion-label>
-                    <br/>
-                    <ion-label class="tam-texto font">{{status}}</ion-label> 
-            </ion-col>
-    </ion-row>
-  
+  <ion-row>
+      <ion-col>
+              <ion-label class="tam-info-titulo font">Director:</ion-label>
+              <br/>
+              <ion-label class="tam-texto font">-</ion-label> 
+      </ion-col>
+  </ion-row>
+  <hr/>
+
+  <ion-row>
+      <ion-col>
+              <ion-label class="tam-info-titulo font">Dirección:</ion-label>
+              <br/>
+              <ion-label class="tam-texto font">{{domicilio}}, {{localidad}}, {{municipio}}</ion-label> 
+      </ion-col>
+  </ion-row>
+  <hr/>
+  <ion-row>
+          <ion-col>
+                  <ion-label class="tam-info-titulo font">Correo electrónico:</ion-label>
+                  <br/>
+                  <ion-label class="tam-texto font">{{correo}}</ion-label> 
+          </ion-col>
+  </ion-row>
+  <hr/>
+
+  <ion-row>
+          <ion-col>
+                  <ion-label class="tam-info-titulo font">Teléfono:</ion-label>
+                  <br/>
+                  <ion-label class="tam-texto font">{{telefono}}</ion-label> 
+          </ion-col>
+  </ion-row>
+  <hr/>
+
+  <ion-row>
+          <ion-col>
+                  <ion-label class="tam-info-titulo font">Estatus:</ion-label>
+                  <br/>
+                  <ion-label class="tam-texto font">{{status}}</ion-label> 
+          </ion-col>
+  </ion-row>
+
 </ion-grid>
 </ion-content>

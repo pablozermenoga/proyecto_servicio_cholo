@@ -1,0 +1,32 @@
+@font-face{
+    font-family:'Roboto';
+    src: url('/src/assets/fonts/roboto.woff2') format('woff2');
+}
+
+.font{
+    font-family: 'Roboto', sans-serif;
+    color:#373737;
+}
+.centrar{
+    text-align: center;
+}
+.justificar{
+    text-align: justify;
+}
+.tam-titulo{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.tam-info-titulo{
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    
+}
+.tam-texto{
+    font-size: 1em;  
+}
+hr{
+    background:lightgray;
+    width:99%;
+}
