@@ -14,7 +14,7 @@ export class AcercadePage implements OnInit {
   ngOnInit() {
   }
   
-  Salir(){
+  cancelar(){
     this.router.navigate(["/home"]);
   }
 

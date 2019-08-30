@@ -36,7 +36,13 @@ export class InfoPage implements OnInit {
         this.localidad = data['Localidad'];
         this.municipio = data['Municipio'];
         this.telefono = data['Telefono'];
-        this.status = data['Status'];
+        // this.status = data['Status'];
+       //console.log(data['Status']);
+        if(data['Status']==true){
+          this.status="Activo";
+        }else{
+          this.status="No activo";
+        }
         let imgs=data['images'].split(',');
         for(let i in imgs){
           console.log('https://sigmovil.herokuapp.com/img/'+data['id']+'/'+imgs[i]);
