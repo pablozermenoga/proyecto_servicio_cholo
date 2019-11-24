@@ -1,5 +1,5 @@
 import { Storage } from '@ionic/storage';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class InfoPage implements OnInit {
   
   anterior:Number=0;
-  nombre: String;
+  nombre:String;
   subsistema: String;
   correo: String;
   domicilio: String;
@@ -22,22 +22,32 @@ export class InfoPage implements OnInit {
   municipio: String;
   telefono: String;
   status: String;
+  clave:String;
+  director:String;
+ 
+  
   slider=[];
 
   constructor(public httpClient: HttpClient, private storage: Storage, private router: Router) { 
+    
     this.storage.get("ventana").then((item)=>{this.anterior=item;});
     this.storage.get('id').then((item)=>{
-      this.httpClient.get("http://sigmovil.herokuapp.com/getescuela/"+item,{}).subscribe(data =>{
+      this.httpClient.get("https://signayarit.herokuapp.com/SigApp/SigMovil/id/"+item,{}).subscribe((data:any) =>{
         console.log(item);
-        this.nombre = data['Nombre_Inst'];
-        this.subsistema = data['Subsistema'];
-        this.correo = data['Correo_Elect_Inst'];
-        this.domicilio = data['Domicilio'];
-        this.localidad = data['Localidad'];
-        this.municipio = data['Municipio'];
-        this.telefono = data['Telefono'];
-        // this.status = data['Status'];
-       //console.log(data['Status']);
+        console.log(JSON.parse(data));
+      var info = JSON.parse(data);
+      this.clave = info[0].fields.ClaveEscuela 
+      this.nombre = info[0].fields.NombreEscuela;
+      this.subsistema = info[0].fields.Nivel;
+      this.clave = info[0].fields.ClaveEscuela;
+      this.director = info[0].fields.nombreDirector; 
+      this.domicilio = info[0].fields.calle;
+      this.localidad = info[0].fields.Localidad;
+      this.municipio = info[0].fields.Municipio;
+      this.status = info[0].fields.EstatusEscuela;
+      this.correo = info[0].fields.Email;
+      this.telefono = info[0].fields.Telefono_Director 
+       /*
         if(data['Status']==true){
           this.status="Activo";
         }else{
@@ -55,10 +65,11 @@ export class InfoPage implements OnInit {
          this.slider=["assets/img/notfound.jpg"];
         }
    
-  
+  */
     }) 
     });
   }
+  
 
   back(){
     if(this.anterior==1){

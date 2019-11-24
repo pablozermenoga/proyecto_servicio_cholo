@@ -10,6 +10,7 @@ import { Router, Params, Routes } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { ModalFiltrosPage } from '../modal-filtros/modal-filtros.page';
 import { NativeGeocoder,NativeGeocoderOptions,NativeGeocoderResult } from '@ionic-native/native-geocoder/ngx';
+import { empty } from 'rxjs';
 
 
 
@@ -100,7 +101,7 @@ export class HomePage {
     async getInstituciones(mapa){
        let position = {};
         
-        this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas', {
+        this.httpClient.get('', {
         }).subscribe(data => {
           for(let i in data){
             let options: NativeGeocoderOptions = {
@@ -128,7 +129,7 @@ export class HomePage {
 
           
           
-              this.addMarkers(position,mapa,data[i].id,data[i].Nombre_Inst);
+              this.addMarkers(position,mapa,data[i].id,data[i].NombreEscuela);
             
          // });
            //console.log(data[i].lat);
@@ -184,20 +185,27 @@ export class HomePage {
     });  
     await modal.present();
     const { data } = await modal.onDidDismiss();
+    let ms = (data.mediasuperior == false) ? "empty":"MEDIA-SUPERIOR";
+    let s = (data.superior == false) ? "empty":"SUPERIOR";
+    let pr = (data.privada == false) ? "empty":"PRIVADA";
+    let pu = (data.publica == false) ? "empty":"PUBLICA";
     this.filtros(data.media,data.mediasuperior,data.superior,data.publica,data.privada);
-    this.httpClient.get('http://sigmovil.herokuapp.com/filtroescuelas', {
-      params:{
-        'media': data.media,
-        'mediasuperior': data.mediasuperior,
-        'superior': data.superior,
-        'publica': data.publica,
-        'privada':data.privada
-      }
-    }).subscribe(data => {
+    this.httpClient.get('https://signayarit.herokuapp.com/SigApp/SigMovilFiltros/'+ms+'/'+s+'/'+pr+'/'+pu ,{
+     /* params:{
+        /*'media': data.,
+        'mediasuperior': (data.mediasuperior == false) ? 'MEDIA-SUPERIOR': 'empty',
+        'superior': (data.superior == false) ? 'SUPERIOR' : 'empty',
+        'privada': (data.privada == false) ? 'PRIVADO' : 'empty',
+        'publica': (data.publica == false) ? 'PUBLICO' : 'empty'
+      }*/
+    }).subscribe((data:any) => {
+      console.log(data);
+      console.log(JSON.parse(data));
+      var info = JSON.parse(data);
       for(let i in data){
-        let position ={lat:Number(data[i].lat),lng:Number(data[i].lng)};
+        let position ={lat:Number(info[0].fields.Latitud),lng:Number(info[0].fields.Longitud)};
     //console.log(position);
-    this.addMarkers(position,this.map,data[i].id,data[i].Nombre_Inst);
+     this.addMarkers(position,this.map,info[0].pk,info[0].fields.NombreEscuela);
         //console.log(data[i].lat);
       }
     });

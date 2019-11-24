@@ -25,8 +25,12 @@ export class BusquedaIsntitucionPage implements OnInit {
     this.httpClient.get('http://sigmovil.herokuapp.com/getescuelas').subscribe(data =>{
       for(let i in data){
         console.log(data[i].Nombre_Inst);
-        this.list.push({nombre:data[i].Nombre_Inst,id:data[i].id,clave:data[i].clave});
-        this.listfija.push({nombre:data[i].Nombre_Inst,id:data[i].id,clave:data[i].clave});
+        this.list.push({nombre:data[i].Nombre_Inst,
+                        id:data[i].id,
+                        clave:data[i].clave});
+        this.listfija.push({nombre:data[i].Nombre_Inst,
+                            id:data[i].id,
+                            clave:data[i].clave});
       }
     });
   }
