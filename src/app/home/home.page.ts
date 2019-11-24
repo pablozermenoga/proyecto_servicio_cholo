@@ -79,9 +79,8 @@ export class HomePage {
       marker.addListener("click",function(){
         
       });*/
-       this.zone.runOutsideAngular(()=>{
-        this.getInstituciones(mapa);
-       });
+       
+       this.getInstituciones(mapa);
 
       /*this.instituciones.forEach(element => {
         let position ={lat:element.lat,lng:element.lng};
@@ -101,39 +100,17 @@ export class HomePage {
     async getInstituciones(mapa){
        let position = {};
         
-        this.httpClient.get('', {
+        this.httpClient.get('https://signayarit.herokuapp.com/SigApp/SigMovilFiltros/MEDIA-SUPERIOR/empty/PRIVADA/empty/' , {
         }).subscribe(data => {
-          for(let i in data){
-            let options: NativeGeocoderOptions = {
-              useLocale: true,
-              maxResults: 5
-          };
+          data = data.replace('\\','');
+          let info = JSON.parse(data);
 
-          position = {lat:Number(data[i].lat),lng:Number(data[i].lng)};
-
-
-         /* this.nativeGeocoder.forwardGeocode(data[i]['Munucipio']+", "+data[i]['Localidad']+', '+data[i]['Domicilio'], options).then(async (result: NativeGeocoderResult[]) =>{
-          position= {lat:Number(result[0].latitude),lng:Number(result[0].longitude)}  
-          //console.log('The coordinates are latitude=' + result[0].latitude + ' and longitude=' + result[0].longitude)
-         
-          position = {lat:Number(result[0].latitude),lng:Number(result[0].longitude)};
-          this.httpClient.get('http://sigmovil.herokuapp.com/coordenadas/'+data[i].id,{
-              params:{
-                lat:position['lat'],
-                lng:position["lng"]
-              }
-          }).subscribe(data=>{
-
-          });
-          }).catch((error: any) => console.log(error));*/
-
-          
-          
-              this.addMarkers(position,mapa,data[i].id,data[i].NombreEscuela);
-            
-         // });
-           //console.log(data[i].lat);
+          for(let i in info){
+            let position ={lat:Number(info[i].fields['Latitud']),lng:Number(info[i].fields['Longitud'])};
+    //console.log(position);
+     this.addMarkers(position,this.map,info[i].pk,info[i].fields["NombreEscuela"]);
           }
+
           
         });
     }
@@ -203,6 +180,7 @@ export class HomePage {
       console.log(JSON.parse(data));
       var info = JSON.parse(data);
       for(let i in data){
+        console.log(info[0].fields.Latitud);
         let position ={lat:Number(info[0].fields.Latitud),lng:Number(info[0].fields.Longitud)};
     //console.log(position);
      this.addMarkers(position,this.map,info[0].pk,info[0].fields.NombreEscuela);
