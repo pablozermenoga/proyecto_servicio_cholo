@@ -100,8 +100,8 @@ export class HomePage {
     async getInstituciones(mapa){
        let position = {};
         
-        this.httpClient.get('https://signayarit.herokuapp.com/SigApp/SigMovilFiltros/MEDIA-SUPERIOR/empty/PRIVADA/empty/' , {
-        }).subscribe(data => {
+        this.httpClient.get('https://signayarit.herokuapp.com/SigApp/SigMovilFiltros/MEDIA-SUPERIOR/SUPERIOR/PRIVADO/PUBLICO/' , {
+        }).subscribe((data:string) => {
           data = data.replace('\\','');
           let info = JSON.parse(data);
 
