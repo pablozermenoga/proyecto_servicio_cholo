@@ -176,15 +176,13 @@ export class HomePage {
         'publica': (data.publica == false) ? 'PUBLICO' : 'empty'
       }*/
     }).subscribe((data:any) => {
-      console.log(data);
-      console.log(JSON.parse(data));
+      data = data.replace('\\','');
       var info = JSON.parse(data);
-      for(let i in data){
-        console.log(info[0].fields.Latitud);
-        let position ={lat:Number(info[0].fields.Latitud),lng:Number(info[0].fields.Longitud)};
-    //console.log(position);
-     this.addMarkers(position,this.map,info[0].pk,info[0].fields.NombreEscuela);
-        //console.log(data[i].lat);
+      for(let i in info){
+        
+        let position ={lat:Number(info[i].fields['Latitud']),lng:Number(info[i].fields['Longitud'])};
+        //console.log(position);
+         this.addMarkers(position,this.map,info[i].pk,info[i].fields["NombreEscuela"]);
       }
     });
 

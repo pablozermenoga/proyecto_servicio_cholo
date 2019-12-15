@@ -36,10 +36,9 @@ export class InfoPage implements OnInit {
         console.log(item);
         console.log(JSON.parse(data));
       var info = JSON.parse(data);
-      this.clave = info[0].fields.ClaveEscuela 
       this.nombre = info[0].fields.NombreEscuela;
+      this.clave = info[0].pk;
       this.subsistema = info[0].fields.Nivel;
-      this.clave = info[0].fields.ClaveEscuela;
       this.director = info[0].fields.nombreDirector; 
       this.domicilio = info[0].fields.calle;
       this.localidad = info[0].fields.Localidad;
