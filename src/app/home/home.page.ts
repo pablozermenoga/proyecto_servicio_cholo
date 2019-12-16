@@ -100,8 +100,13 @@ export class HomePage {
     async getInstituciones(mapa){
        let position = {};
         
+<<<<<<< HEAD
         this.httpClient.get('https://signayarit.herokuapp.com/SigApp/SigMovilFiltros/MEDIA-SUPERIOR/empty/PRIVADA/empty/' , {
         }).subscribe((data:any) => {
+=======
+        this.httpClient.get('https://signayarit.herokuapp.com/SigApp/SigMovilFiltros/MEDIA-SUPERIOR/SUPERIOR/PRIVADO/PUBLICO/' , {
+        }).subscribe((data:string) => {
+>>>>>>> 839f238eb607057f653316fd220bc375fb683b01
           data = data.replace('\\','');
           let info = JSON.parse(data);
 
@@ -177,6 +182,7 @@ export class HomePage {
       }*/
     }).subscribe((data:any) => {
       data = data.replace('\\','');
+<<<<<<< HEAD
           let info = JSON.parse(data);
 
           for(let i in info){
@@ -184,6 +190,15 @@ export class HomePage {
     //console.log(position);
      this.addMarkers(position,this.map,info[i].pk,info[i].fields["NombreEscuela"]);
           }
+=======
+      var info = JSON.parse(data);
+      for(let i in info){
+        
+        let position ={lat:Number(info[i].fields['Latitud']),lng:Number(info[i].fields['Longitud'])};
+        //console.log(position);
+         this.addMarkers(position,this.map,info[i].pk,info[i].fields["NombreEscuela"]);
+      }
+>>>>>>> 839f238eb607057f653316fd220bc375fb683b01
     });
 
 
