@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './autocompeltemodal.component.html',
   styleUrls: ['./autocompeltemodal.component.scss'],
 })
+//anulada
 export class AutocompeltemodalComponent implements OnInit {
 
   constructor() { }

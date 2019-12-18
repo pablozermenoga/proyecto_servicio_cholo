@@ -6,8 +6,10 @@ import {Router, RouterEvent} from '@angular/router';
   templateUrl: './menu.page.html',
   styleUrls: ['./menu.page.scss'],
 })
+//menu lateral
 export class MenuPage implements OnInit {
 
+  //rutas para las vistas del menu
   pages=[
     {
       title:'Mapa',

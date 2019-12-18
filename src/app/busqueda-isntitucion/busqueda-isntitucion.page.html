@@ -8,8 +8,8 @@
 </ion-header> 
 
 <ion-content>
-  <ion-list *ngIf="isItemAvailable">
-    <ion-item (click)="info(item.id)" *ngFor="let item of list">
+  <ion-list *ngIf="isItemAvailable"><!--pregunta si la variable de control es verdadera para llenar la lista-->
+    <ion-item (click)="info(item.id)" *ngFor="let item of list"><!--se realiza un ciclo para llenar la lista-->
       {{item.nombre}}
     </ion-item>
   </ion-list>

@@ -3,6 +3,7 @@
       <ion-buttons slot="start">
           <ion-menu-button></ion-menu-button>
       </ion-buttons>
+      <!--barra de busqueda-->
       <ion-searchbar placeholder="Buscar dirección..." [(ngModel)]="query" (click)="abrirAutoComplete()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
@@ -13,9 +14,7 @@
   </div>
 
   <!--
-  <ion-bbutton (click)="abrirModal()">
-    Filtros
-  </ion-button>
+  botones flotantes para la busqueda y para el scanner
 -->
 <ion-fab vertical="top" horizontal="end" slot="fixed">
       <ion-fab-button color="medium" (click)="abrirModal()">

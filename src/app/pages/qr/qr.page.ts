@@ -6,6 +6,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
   templateUrl: './qr.page.html',
   styleUrls: ['./qr.page.scss'],
 })
+//anulada
 export class QrPage implements OnInit {
   qrData = null;
   createdCode = null;

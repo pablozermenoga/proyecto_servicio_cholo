@@ -1,15 +1,18 @@
 <ion-header>
   <ion-toolbar>
+    <!--barra de busqueda-->
     <ion-searchbar (input)="localizar()" [debounce]="250" [(ngModel)]="query" placeholder="Buscar dirección..."></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list >
+    <!--recorre los resultados de la busqueda y genera la lista-->
     <ion-item *ngFor="let item of list" value="item" (click)="evento(item)">
       {{item}}
     </ion-item>
   </ion-list>
 
 </ion-content>
+    <!--cancela la busqueda-->
 <ion-button (click)="cancelar()" color="primary" expand="block" fill="solid" slot="fixed" >Cancelar</ion-button>

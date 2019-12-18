@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class ModalFiltrosPage implements OnInit {
 
+  //filtros que vienen desde home
   @Input() media: boolean;
   @Input() mediasuperior: boolean;
   @Input() superior: boolean;
@@ -24,6 +25,7 @@ export class ModalFiltrosPage implements OnInit {
   }
   //funcion para salir de la ventana modal 
   Salir(){
+    // nuevos filtros y cierra la modal
     this.modalCtrl.dismiss({
     'media': this.media,
     'mediasuperior': this.mediasuperior,

@@ -1,3 +1,4 @@
+//dependencias necesarias para que la ventana funcione correctamente
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -14,6 +15,7 @@ export class AcercadePage implements OnInit {
   ngOnInit() {
   }
   
+  //metodo para regresar a la ventana principal de la aplicacion
   cancelar(){
     this.router.navigate(["/home"]);
   }

@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './cct.page.html',
   styleUrls: ['./cct.page.scss'],
 })
+//anulada
 export class CctPage implements OnInit {
 
   constructor() { }

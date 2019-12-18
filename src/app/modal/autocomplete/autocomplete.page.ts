@@ -14,8 +14,8 @@ declare var google;
 })
 export class AutocompletePage implements OnInit {
 
-  query: String;
-  list: any = [];
+  query: String; // contiene el texto de la direccion
+  list: any = []; // contiene la coincidencias de la busqueda
   constructor(private cdr: ChangeDetectorRef, private storage: Storage, private router: Router,
     private modalCtrl: ModalController) { }
 
@@ -25,23 +25,22 @@ export class AutocompletePage implements OnInit {
   async localizar(){
 
    
-    let geocoder = new google.maps.Geocoder();
-    let l = [];
-    console.log(this.query);
-    geocoder.geocode({'address': this.query},function(results,status){
-      if(status === 'OK'){        
-        this.list = [];
-        results.forEach(element => {
-          console.log(element.geometry.lat);
-          l.push(element.formatted_address);
+    let geocoder = new google.maps.Geocoder(); // geocoder direccion a pocicion
+    let l = []; // lista temporal
+    geocoder.geocode({'address': this.query},function(results,status){ // realiza la busqueda de la direccion
+      if(status === 'OK'){ // si encuentra coincidencias
+        this.list = []; // inicializa la lista
+        results.forEach(element => { //recorre los resultados
+          l.push(element.formatted_address); // los asigna a la lista temporal
         });
         
       }
     });
-    this.list = l;
-    this.cdr.detectChanges();
+    this.list = l; // vacia la lista temporal en la lista
+    this.cdr.detectChanges(); // para detectar cambios
   }
 
+  // pasa el resultado a la ventana anterior y cierra la modal
   evento(item){
 
     this.modalCtrl.dismiss({
@@ -49,6 +48,7 @@ export class AutocompletePage implements OnInit {
     });
   }
 
+  // pasa un null a la ventana anterior y cierra la modal
   cancelar(){
     this.modalCtrl.dismiss({
       "lugar":null

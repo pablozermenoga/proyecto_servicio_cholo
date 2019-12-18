@@ -1,6 +1,7 @@
+//importamos dependencias
 import { AutocompletePage } from './../modal/autocomplete/autocomplete.page';
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { GoogleMap,GoogleMaps,GoogleMapOptions,GoogleMapsEvent } from '@ionic-native/google-maps/ngx'
+import { GoogleMap,GoogleMaps,GoogleMapOptions,GoogleMapsEvent } from '@ionic-native/google-maps/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { HTTP } from '@ionic-native/http/ngx'
@@ -14,7 +15,7 @@ import { empty } from 'rxjs';
 
 
 
-
+//se declara una constante para trabajar con las opciones del mapa de google
 declare const google;
 @Component({
   selector: 'app-home',
@@ -22,15 +23,16 @@ declare const google;
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  @ViewChild('map') mapElement: ElementRef;
-  map: any;
+  @ViewChild('map') mapElement: ElementRef; //obtiene el elemento del html llamado map
+  map: any; //contendra al mapa
 
-  markers: any=[];
+  markers: any=[]; // arreglo de los marcadores de las escuelas
   query: String='';
   
-  scannedCode = null;
+  scannedCode = null; // informacion del codigo que escanea el lector de qr
 
-  media: boolean=true;
+  // filtros por defecto se muestran todas las escuelas
+  media: boolean=true; 
   mediasuperior: boolean=true;
   superior: boolean=true;
   publica: boolean=true;
@@ -49,7 +51,9 @@ export class HomePage {
     private nativeGeocoder: NativeGeocoder,
     private zone: NgZone
     ) {
+      //se obtiene la posicion actual del dispositivo
       this.geolocation.getCurrentPosition().then((resp)=>{
+        //carga el mapa en la posicion actual
         this.loadMap(resp.coords.latitude,resp.coords.longitude);
       }).catch((error)=>{
   
@@ -57,37 +61,22 @@ export class HomePage {
 
     }
 
+    //metodo para cargar el mapa
     async loadMap(latitud, longitud){
-      let pos = { lat: latitud, lng: longitud }
-      var mapa = new google.maps.Map(this.mapElement.nativeElement,{
+      let pos = { lat: latitud, lng: longitud } // variable con formato necesario para el mapa
+      var mapa = new google.maps.Map(this.mapElement.nativeElement,{ // se carga el mapa con las opciones especificadas
         zoom: 16,
           center: pos,
           mapTypeId: 'roadmap'
       });
   
       
-      /*var marker = new google.maps.Marker({
-        position: pos,
-        map: mapa,
-        title: "Hello"
-      });
-  
-      mapa.addListener('click',function(opc){
-          marker.setPosition(opc.latLng);
-      });
-  
-      marker.addListener("click",function(){
-        
-      });*/
-       
+      
+       //obtiene las instituciones
        this.getInstituciones(mapa);
 
-      /*this.instituciones.forEach(element => {
-        let position ={lat:element.lat,lng:element.lng};
-        //console.log(position);
-        this.addMarkers(position,mapa,element.id);
-      });*/
-  
+     
+      // asigna el mapa a la variable global
       this.map = mapa;
 
       
@@ -97,57 +86,66 @@ export class HomePage {
      
     }
 
+    // metodo para obtener las instituciones
     async getInstituciones(mapa){
-       let position = {};
-        
-<<<<<<< HEAD
-        this.httpClient.get('https://signayarit.herokuapp.com/SigApp/SigMovilFiltros/MEDIA-SUPERIOR/empty/PRIVADA/empty/' , {
-        }).subscribe((data:any) => {
-=======
+       // mediante peticion get obtenemos las instituciones del sistema web
         this.httpClient.get('https://signayarit.herokuapp.com/SigApp/SigMovilFiltros/MEDIA-SUPERIOR/SUPERIOR/PRIVADO/PUBLICO/' , {
         }).subscribe((data:string) => {
->>>>>>> 839f238eb607057f653316fd220bc375fb683b01
-          data = data.replace('\\','');
-          let info = JSON.parse(data);
+          data = data.replace('\\',''); // se formatea la informacion para poder trabajarla
+          let info = JSON.parse(data); // se transforma la informacion a JSON
 
+          // recorre el JSON
           for(let i in info){
+            // se le da formato a la posicion para poder utilizarla
             let position ={lat:Number(info[i].fields['Latitud']),lng:Number(info[i].fields['Longitud'])};
-    //console.log(position);
-     this.addMarkers(position,this.map,info[i].pk,info[i].fields["NombreEscuela"]);
+            // se agrega el marcador de la institucion
+            this.addMarkers(position,this.map,info[i].pk,info[i].fields["NombreEscuela"]);
           }
 
           
         });
     }
   
+    // metodo para agregar los marcadores de las instituciones necesita la posicion la referencia al mapa
+    // el identificador y el nombre de la institucion
     addMarkers(pos,map,id,name){
+
+      // se agrega a el arreglo el marcador correspondiente
      this.markers.push(new google.maps.Marker({
-        position: pos,
-        map: map,
-        title: name,
+        position: pos, // se le asigna la posicion
+        map: map, // se relaciona el mapa
+        title: name, // nombre que aparecera al poner el cursor sobre el
         icon: {
-                url:'../assets/icon/university.png',
-                scaledSize:new google.maps.Size(30, 30),
+                url:'../assets/icon/university.png', // icono que se mostrara en el mapa
+                scaledSize:new google.maps.Size(30, 30), // tamaño del icono
               },
-        id: id,
+        id: id, // identificador
       })
       );
-      this.markers[this.markers.length-1].addListener('click',(event)=>{
+      
+      this.markers[this.markers.length-1].addListener('click',(event)=>{ // agrega el evento para abrir la institucion
         this.navigateto(id);
       });
     }
 
+    // metodo para abrir institucion en nueva ventana
     navigateto(id){
-      this.storage.set("id",id);
+      // se envia el identificador a la memoria cache
+      this.storage.set("id",id); 
+      // llama a la ventana info
       this.router.navigate(['/info']);
+      // se envia a la cache la info de que se mando a llamar desde home(1) y no desde busqueda(2)
       this.storage.set("ventana",1);
     }
 
+    // metodo para escanear el codigo qr
     scanCode() {
       this.barcodeScanner.scan().then(barcodeData => {
-        this.scannedCode = barcodeData.text;
-        this.storage.set("id",barcodeData.text);
-        this.router.navigate(['/info']);
+        this.scannedCode = barcodeData.text; 
+        this.storage.set("id",barcodeData.text); // se envia el identificador obtenido del escaneo a la cache
+        this.storage.set("ventana",1); // se envia a la cache la info de que se mando a llamar desde home(1) y no desde busqueda(2)
+        this.router.navigate(['/info']);      // llama a la ventana info
+  
     });
   }
 
@@ -155,57 +153,42 @@ export class HomePage {
   //VetanaModal funcion para abrir modal 
   async abrirModal(){
     
+    // creacion de la variable que contendra a la modal
     const modal =  await this.modalCtrl.create({
-      component:ModalFiltrosPage,
-      componentProps: {
-    'media': this.media,
+      component:ModalFiltrosPage, // se asigna al componente a llamar
+      componentProps: { // se envian las propiedades de los filtros
+    'media': this.media, 
     'mediasuperior': this.mediasuperior,
     'superior': this.superior,
     'publica': this.publica,
     'privada':this.privada
       }
     });  
-    await modal.present();
-    const { data } = await modal.onDidDismiss();
+    await modal.present(); // activa la modal
+    const { data } = await modal.onDidDismiss(); // espera a que termine
+    // se da formato a los filtros
     let ms = (data.mediasuperior == false) ? "empty":"MEDIA-SUPERIOR";
     let s = (data.superior == false) ? "empty":"SUPERIOR";
     let pr = (data.privada == false) ? "empty":"PRIVADA";
     let pu = (data.publica == false) ? "empty":"PUBLICA";
+    // se asignan los valores a los filtros
     this.filtros(data.media,data.mediasuperior,data.superior,data.publica,data.privada);
+    // se ejecuta el get de las instituciones con los nuevos filtros
     this.httpClient.get('https://signayarit.herokuapp.com/SigApp/SigMovilFiltros/'+ms+'/'+s+'/'+pr+'/'+pu ,{
-     /* params:{
-        /*'media': data.,
-        'mediasuperior': (data.mediasuperior == false) ? 'MEDIA-SUPERIOR': 'empty',
-        'superior': (data.superior == false) ? 'SUPERIOR' : 'empty',
-        'privada': (data.privada == false) ? 'PRIVADO' : 'empty',
-        'publica': (data.publica == false) ? 'PUBLICO' : 'empty'
-      }*/
     }).subscribe((data:any) => {
-      data = data.replace('\\','');
-<<<<<<< HEAD
-          let info = JSON.parse(data);
-
-          for(let i in info){
-            let position ={lat:Number(info[i].fields['Latitud']),lng:Number(info[i].fields['Longitud'])};
-    //console.log(position);
-     this.addMarkers(position,this.map,info[i].pk,info[i].fields["NombreEscuela"]);
-          }
-=======
-      var info = JSON.parse(data);
-      for(let i in info){
-        
+      data = data.replace('\\',''); // se formatea la informacion para poder trabajarla
+      var info = JSON.parse(data); // se transforma la informacion a JSON
+      for(let i in info){  // recorre el JSON
+        // se le da formato a la posicion para poder utilizarla
         let position ={lat:Number(info[i].fields['Latitud']),lng:Number(info[i].fields['Longitud'])};
-        //console.log(position);
+        // se agrega el marcador de la institucion
          this.addMarkers(position,this.map,info[i].pk,info[i].fields["NombreEscuela"]);
       }
->>>>>>> 839f238eb607057f653316fd220bc375fb683b01
     });
-
-
-    console.log(data.primaria);
   }
 
 
+  // metodo para asignar filtros
   filtros(m,ms,s,pu,pr){
     this.media = m;
     this.mediasuperior = ms;
@@ -213,74 +196,51 @@ export class HomePage {
     this.publica = pu;
     this.privada = pr;
 
+    // limpia las pociciones de los marcadores para que desaparescan del mapa
     this.markers.forEach(element => {
-      element.setMap(null);
+      element.setMap(null); 
     });
 
+    // se limpia el arreglo de los marcadores para la reasignacion de con los filtros correspondientes
     this.markers = [];
   }
 
+  // metodo para que te envie a un lugar especifico en el mapa
   changeCenter(){
-    let geocoder = new google.maps.Geocoder();
+    let geocoder = new google.maps.Geocoder(); // geocoder es para decodificar direcciones y pasarlas a posiciones
     let mapa = this.map;
     let pos = '';
 
-    geocoder.geocode({'address': this.query},function(results,status){
-      if(status === 'OK'){        
-        pos = results[0].geometry.location;
-        console.log(pos);
-        mapa.setCenter(results[0].geometry.location);
+    geocoder.geocode({'address': this.query},function(results,status){ // la variable query contiene la direccion buscada
+      if(status === 'OK'){ // si el estatus es OK entonces quiere decir que si existe la direccion    
+        pos = results[0].geometry.location; // se obtiene la posicion
+        mapa.setCenter(results[0].geometry.location); // cambia al la ubicacion seleccionada
         mapa.setZoom(16);
       }
     });
   }
 
 
+  // modal autocomplete para las direcciones
   async abrirAutoComplete(){
     
-    const modal =  await this.modalCtrl.create({
+    const modal =  await this.modalCtrl.create({ //se crea la modal
       component:AutocompletePage,
-      componentProps: {
-    'media': this.media,
-    'mediasuperior': this.mediasuperior,
-    'superior': this.superior,
-    'publica': this.publica,
-    'privada':this.privada
-      }
     });  
     await modal.present();
-    const { data } = await modal.onDidDismiss();
-    this.query = data.lugar;
+    const { data } = await modal.onDidDismiss(); // espera a que cierre
+    this.query = data.lugar; // se obtiene el lugar
         if(this.query != null){
-          this.changeCenter();
+          this.changeCenter(); // se cambia el mapa a la ubicacion
         }
-    /*this.filtros(data.media,data.mediasuperior,data.superior,data.publica,data.privada);
-    this.httpClient.get('http://sigmovil.herokuapp.com/filtroescuelas', {
-      params:{
-        'media': data.media,
-        'mediasuperior': data.mediasuperior,
-        'superior': data.superior,
-        'publica': data.publica,
-        'privada':data.privada
-      }
-    }).subscribe(data => {
-      for(let i in data){
-        let position ={lat:Number(data[i].lat),lng:Number(data[i].lng)};
-    //console.log(position);
-    this.addMarkers(position,this.map,data[i].id);
-        //console.log(data[i].lat);
-      }
-    });
-
-
-    console.log(data.primaria);*/
   }
 
-   async delay(ms: number) {
+   async delay(ms: number) { // metodo para realizar una pausa recibe la cantidad en milisegundos
     return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
   busquedaNombre(){
+    // abrir ventana busqueda institucion
     this.router.navigate(['/busqueda-isntitucion']);
   }
 }

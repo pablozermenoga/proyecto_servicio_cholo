@@ -17,7 +17,7 @@
 
 <ion-content>
 <ion-grid>
-    <ion-row>
+    <ion-row> <!--para las imagenes en el slider-->
       <ion-slides pager="true" class="pager">
           <ion-slide *ngFor="let slide of slider">
               <img [src]="slide"/>
@@ -25,6 +25,9 @@
       </ion-slides>
   </ion-row>
 
+  <!--asignacion de la informacion obtenida al poner el nombre de la variable del archivo 
+    info.page.ts dentro de {{}} el contenido de la variable se muestra en la etiqueta correspondiente
+-->
   <ion-row>
       <ion-col>
               <ion-label class="tam-info-titulo font">Clave centro de trabajo:</ion-label>

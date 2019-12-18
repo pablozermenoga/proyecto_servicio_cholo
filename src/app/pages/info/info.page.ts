@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 })
 export class InfoPage implements OnInit {
   
+  // propiedades de la institucion
   anterior:Number=0;
   nombre:String;
   subsistema: String;
@@ -29,13 +30,14 @@ export class InfoPage implements OnInit {
   slider=[];
 
   constructor(public httpClient: HttpClient, private storage: Storage, private router: Router) { 
-    
-    this.storage.get("ventana").then((item)=>{this.anterior=item;});
-    this.storage.get('id').then((item)=>{
+    // se obtiene de cache cual ventana llamo la pagina home(1), busqueda(2)
+    this.storage.get("ventana").then((item)=>{this.anterior=item;}); 
+    this.storage.get('id').then((item)=>{ // se obtiene el identificador desde cache
+      //se obtiene la info de la institucion desde el sistema web mediante el identificador
       this.httpClient.get("https://signayarit.herokuapp.com/SigApp/SigMovil/id/"+item,{}).subscribe((data:any) =>{
-        console.log(item);
-        console.log(JSON.parse(data));
+      //se formatea la info
       var info = JSON.parse(data);
+      //se asigna la info a las variables
       this.nombre = info[0].fields.NombreEscuela;
       this.clave = info[0].pk;
       this.subsistema = info[0].fields.Nivel;
@@ -70,10 +72,11 @@ export class InfoPage implements OnInit {
   }
   
 
+  // metodo para volver a la ventana anterior
   back(){
-    if(this.anterior==1){
+    if(this.anterior==1){ // si es 1 vuelve a home
       this.router.navigate(['/home'], { skipLocationChange: true } );
-    }else{
+    }else{ // si es 2 vuelbe a busqueda
       this.router.navigate(['/busqueda-isntitucion'], { skipLocationChange: true } );
     }
     
